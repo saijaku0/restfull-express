@@ -1,5 +1,5 @@
 $kind: http-request
-url: "{{base_api}}/api/auth/register"
+url: "{{base_url}}/api/auth/register"
 method: POST
 body:
   type: json
@@ -14,20 +14,4 @@ body:
     \  \"lastName\": \"Petrov\"\r
 
     }"
-scripts:
-  - type: afterResponse
-    code: "if (pm.response.code === 200 || pm.response.code === 201) {\r
-
-      \  const body = pm.response.json();\r
-
-      \  if (body.accessToken) {\r
-
-      \    pm.environment.set('accessToken', body.accessToken);\r
-
-      \    console.log('accessToken saved to environment');\r
-
-      \  }\r
-
-      }"
-    language: text/javascript
-order: 2000
+order: 1000
