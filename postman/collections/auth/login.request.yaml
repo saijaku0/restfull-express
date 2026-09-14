@@ -1,5 +1,5 @@
 $kind: http-request
-url: "{{base_api}}/api/auth/login"
+url: "{{base_url}}/api/auth/login"
 method: POST
 body:
   type: json
@@ -26,4 +26,4 @@ scripts:
 
       }"
     language: text/javascript
-order: 1672
+order: 4000
