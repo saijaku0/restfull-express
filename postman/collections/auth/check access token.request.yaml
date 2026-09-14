@@ -1,6 +1,0 @@
-$kind: http-request
-url: "{{base_api}}/api/protected"
-method: GET
-headers:
-  Authorization: Bearer {{accessToken}}
-order: 2202098450039805
