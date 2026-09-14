@@ -1,0 +1,17 @@
+$kind: http-request
+url: "{{base_url}}/api/tasks"
+method: POST
+headers:
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: "{\r
+
+    \  \"title\": \"First task\",\r
+
+    \  \"description\": \"Try it out\",\r
+
+    \  \"priority\": \"high\"\r
+
+    }"
+order: 1000
