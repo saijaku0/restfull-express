@@ -1,9 +1,18 @@
-# Use this workspace to collaborate
 workspace:
   id: ce7900a5-65c0-42a0-a602-e32311866c9c
-
-# All resources in the `postman/` folder are automatically registered in Local View.
-# Point to additional files outside the `postman/` folder to register them individually. Example:
-#localResources:
-#  collections:
-#    - ../tests/E2E Test Collection/
+cloudResources:
+  collections:
+    ../postman/collections/auth: 9602026-fb2d0e9f-ccb4-44cd-bf9f-8d468c6682a5
+    ../postman/collections/admin: 9602026-ae3ecc36-ecf8-4480-943c-4c7f20343ff3
+    ../postman/collections/Test: 9602026-9457a69d-436b-47e5-9f2c-dbd95f631702
+    ../postman/collections/Profile: 9602026-b92dbbab-c30e-4563-a50b-393a5b2e277b
+  environments:
+    ../postman/environments/env.environment.yaml: 9602026-c96873ab-3494-44b0-99e3-bb914c581756
+  globals:
+    ../postman/globals/workspace.globals.yaml: 7d7a7fdb-1c3f-4619-88b5-00101a1e6b81
+localResources:
+  specs:
+    - ../C:/Users/miner/OneDrive/Документы/лаби/3к/rest-api/docs/openapi.json
+resourceNameMappings:
+  specs:
+    - ../docs/openapi.json: openapi.json
