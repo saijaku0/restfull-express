@@ -1,0 +1,13 @@
+$kind: http-request
+url: "{{base_url}}/api/tasks/7ff275ec-9043-4012-8726-bf391fc666c0"
+method: PUT
+headers:
+  Authorization: Bearer {{accessToken}}
+body:
+  type: json
+  content: "{\r
+
+    \    \"status\": \"completed\"\r
+
+    }"
+order: 3000
