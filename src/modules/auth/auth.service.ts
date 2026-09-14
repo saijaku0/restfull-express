@@ -2,7 +2,8 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../../config/prisma';
 import { AppError } from '../../utils/AppError';
-import { signAccessToken, signRefreshToken } from '../../utils/token';
+import { signAccessToken, signRefreshToken, TokenPayload } from '../../utils/token';
+import { env } from '../../config/env';
 
 interface RegisterInput {
   email: string;
@@ -94,4 +95,47 @@ export async function loginUser(input: LoginInput) {
       role: user.role,
     },
   };
+}
+
+export async function refreshTokens(oldRefreshToken: string) {
+  if (!oldRefreshToken) {
+    throw new AppError(401, 'Refresh token required');
+  }
+
+  let payload: TokenPayload;
+  try {
+    payload = jwt.verify(oldRefreshToken, env.jwt.refreshSecret) as TokenPayload;
+  } catch {
+    throw new AppError(401, 'Invalid or expired refresh token');
+  }
+
+  const stored = await prisma.refreshToken.findUnique({
+    where: { token: oldRefreshToken },
+  });
+  if (!stored) {
+    throw new AppError(401, 'Refresh token not recognized');
+  }
+
+  await prisma.refreshToken.delete({ where: { token: oldRefreshToken } });
+
+  const newPayload = { userId: payload.userId, role: payload.role };
+  const accessToken = signAccessToken(newPayload);
+  const refreshToken = signRefreshToken(newPayload);
+
+  const decoded = jwt.decode(refreshToken) as { exp: number };
+  await prisma.refreshToken.create({
+    data: {
+      token: refreshToken,
+      userId: payload.userId,
+      expiresAt: new Date(decoded.exp * 1000),
+    },
+  });
+
+  return { accessToken, refreshToken };
+}
+
+export async function logoutUser(refreshToken: string) {
+  if (refreshToken) {
+    await prisma.refreshToken.deleteMany({ where: { token: refreshToken } });
+  }
 }
