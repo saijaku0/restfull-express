@@ -1,6 +1,0 @@
-name: dev
-values:
-  - key: base_api
-    value: ''
-  - key: accessToken
-    value: ''
